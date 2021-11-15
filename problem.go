@@ -1,7 +1,7 @@
 package ds
 
 import (
-	"cf/queue"
+	"ds/queue"
 	"container/heap"
 	"fmt"
 )

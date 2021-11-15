@@ -1,8 +1,8 @@
 package ds
 
 import (
-	dsheap "cf/heap"
-	"cf/interfaces"
+	dsheap "ds/heap"
+	"ds/interfaces"
 	"container/heap"
 	"math"
 )

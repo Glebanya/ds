@@ -1,7 +1,7 @@
 package heap
 
 import (
-	"cf/interfaces"
+	"ds/interfaces"
 )
 
 type Heap []interfaces.Comparable
