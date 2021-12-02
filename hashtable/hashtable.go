@@ -25,9 +25,10 @@ func getHash(item interface{}) (uint8, error) {
 		return uint8(0), err
 	}
 
-	hash := uint8(0)
+	var hash uint8 = 0
 	for _, byte := range bytes {
-		hash = rand[hash^uint8(byte)]
+		index := (hash ^ uint8(byte)) % hashTableSize
+		hash = rand[index]
 	}
 
 	return hash, nil
@@ -41,14 +42,14 @@ func init() {
 
 type (
 	HashMap struct {
-		hashMap [hashTableSize][]*interface{}
+		hashMap [hashTableSize][]interface{}
 		len     int
 	}
 )
 
 func New() *HashMap {
 
-	hashMapArray := [hashTableSize][]*interface{}{}
+	hashMapArray := [hashTableSize][]interface{}{}
 
 	return &HashMap{
 		hashMap: hashMapArray,
@@ -57,14 +58,14 @@ func New() *HashMap {
 
 }
 
-func (hmap *HashMap) Insert(item *interface{}) error {
+func (hmap *HashMap) Insert(item interface{}) error {
 	key, err := getHash(item)
 	if err != nil {
 		return err
 	}
 
 	if hmap.hashMap[key] == nil {
-		hmap.hashMap[key] = make([]*interface{}, 2)
+		hmap.hashMap[key] = make([]interface{}, 2)
 	}
 
 	hmap.hashMap[key] = append(hmap.hashMap[key], item)
@@ -73,7 +74,7 @@ func (hmap *HashMap) Insert(item *interface{}) error {
 	return nil
 }
 
-func (hmap *HashMap) Has(item *interface{}) (bool, error) {
+func (hmap *HashMap) Has(item interface{}) (bool, error) {
 	key, err := getHash(item)
 	if err != nil {
 		return false, err
@@ -92,7 +93,7 @@ func (hmap *HashMap) Has(item *interface{}) (bool, error) {
 	return false, nil
 }
 
-func (hmap *HashMap) Delete(item *interface{}) (bool, error) {
+func (hmap *HashMap) Delete(item interface{}) (bool, error) {
 	key, err := getHash(item)
 	if err != nil {
 		return false, err
