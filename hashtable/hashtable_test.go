@@ -56,4 +56,9 @@ func TestAddAndDeleteToHashTable(t *testing.T) {
 		}
 	}
 
+	success, err := hashTable.Has(0)
+	if success {
+		t.Errorf(fmt.Sprintf("Unexpected hashtable anwser. Hash table must not contain: 0"))
+	}
+
 }
